@@ -1,38 +1,18 @@
 import React,{ useState } from 'react';
-import { BrowserRouter,Link } from 'react-router-dom';
+
+import Header from './Components/Header';
 import Routes from './Components/Router';
 
 import './App.scss';
 
 function App() {
-  const [ isLoggedIn,setIsAuthenticated ] = useState(sessionStorage.getItem('token'));
-
-  const logOut = () => {
-    sessionStorage.clear();
-    setIsAuthenticated(sessionStorage.getItem('token'));
-  }
+  const token = sessionStorage.getItem('token');
+  const [ isAuthenticated,setIsAuthenticated ] = useState(!!token);
 
   return (
     <div className="App">
-      <BrowserRouter>
-        <div className="menubar">
-          <Link to={"/"}>Neo Certificates</Link>
-          <div className="spacer" />
-          {isLoggedIn?(
-            <div className="menubar-right">
-              <Link to={"/"} onClick={logOut}>Logout</Link>
-            </div>)
-            :
-            (<div className="menubar-right">
-              <Link to={"/register"}>SignUp</Link>
-              <Link to={"/login"}>SignIn</Link>
-            </div>)
-          }
-        </div>
-
+        <Header isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
         <Routes setIsAuthenticated={setIsAuthenticated}/>
-
-      </BrowserRouter> 
     </div>
   );
 }

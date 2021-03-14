@@ -34,10 +34,18 @@
 }
 
 input{
-    border: none;
-    background-color: #e7e7e7;
     margin-top: 4%;
     padding: 8px 16px;
+}
+
+.inputEnabled{
+    background-color: white;
+    border: 1px solid rgb(37, 33, 33);
+}
+
+.inputDisabled{
+    border: none;
+    background-color: #e7e7e7;
 }
 
 button {
@@ -63,11 +71,6 @@ button:hover {
 
 .save-Button{
     top: 15%;
-}
-
-.nameButton1{
-    background-color: white;
-    border: 1px solid rgb(37, 33, 33);
 }
 
 .download{

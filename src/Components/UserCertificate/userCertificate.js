@@ -13,10 +13,10 @@ const options = {
 
 const UserCertificate = () => {
     const [ name,setName ] = useState('your_name');
-    const [ nameEdit,setEditName ] = useState(false);
+    const [ editAction,setEditAction ] = useState(false);
 
     const editNameHandler = () => {
-        setEditName(!nameEdit)
+        setEditAction(!editAction)
     }
 
     const nameHandler = (e) => {
@@ -30,7 +30,7 @@ const UserCertificate = () => {
                 <div className="download"> 
                     <ReactToPdf targetRef={refValue} filename="neo-certificate.pdf" options={options} x={.5} y={.4} scale={1}>
                         {({toPdf}) => (
-                            !nameEdit && <button className="download-button" onClick={toPdf}><b>Download</b></button>
+                            !editAction && <button className="download-button" onClick={toPdf}><b>Download</b></button>
                         )}
                     </ReactToPdf>
                 </div>
@@ -39,35 +39,23 @@ const UserCertificate = () => {
                 <div className="user-Profile-details">
                     <div className="user-certificate space">
                         <div className="user-certificate-name"><b>Name</b></div>
-                        {!nameEdit && <div className="edit-details" onClick={editNameHandler}><b>Edit</b> </div>}
+                        {!editAction && <div className="edit-details" onClick={editNameHandler}><b>Edit</b> </div>}
                     </div>
                     
-                    {nameEdit ?(
-                        <input 
-                            className="nameButton1"
-                            value={name}
-                            onChange={(e) => nameHandler(e)}
-                        /> 
-                    ):(
-                        <input 
-                            value={name}
-                            onChange={(e) => nameHandler(e)}
-                            readOnly
-                        />  
-                    )}
+                    <input 
+                        className={editAction ? "inputEnabled" : "inputDisabled"}
+                        value={name}
+                        onChange={(e) => nameHandler(e)}
+                        disabled={!editAction}
+                    /> 
 
                     <div className="save">
-                        {nameEdit && <button className="save-Button" onClick={editNameHandler}><b>Save</b></button>}
+                        {editAction && <button className="save-Button" onClick={editNameHandler}><b>Save</b></button>}
                     </div>
  
                 </div>
-                
-                
-                
             </div>
-            
-        </div>
-        
+        </div>  
     );
 }
 

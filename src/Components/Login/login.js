@@ -5,8 +5,8 @@ import Avatar from '../../Assets/avatar.png';
 import './login.scss';
 
 const Login = ({setIsAuthenticated}) => {
-    const [ userName,setUserName ] = useState();
-    const [ password,setPassword ] = useState();
+    const [ userName,setUserName ] = useState('');
+    const [ password,setPassword ] = useState('');
 
     const history = useHistory();
 
