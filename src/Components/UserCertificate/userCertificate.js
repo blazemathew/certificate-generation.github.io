@@ -1,5 +1,6 @@
-import React,{ useState } from 'react';
+import React,{ useState,useEffect } from 'react';
 import CertificateDisplay from './CertificateDisplay';
+import { useLocation } from 'react-router-dom';
 import ReactToPdf from "react-to-pdf";
 import './userCertificate.scss';
 
@@ -12,29 +13,42 @@ const options = {
 };
 
 const UserCertificate = () => {
-    const [ name,setName ] = useState('your_name');
+    const [ dataValues,setdataValues ] = useState('');
+    const [ templateCode,setTemplateCode ] = useState('');
     const [ editAction,setEditAction ] = useState(false);
+
+    const param = useLocation();
+    const search = parseInt(new URLSearchParams(param.search).get('k'));
+    const templates = JSON.parse(localStorage.getItem('templates'));
+
+    useEffect(()=>{
+        const data = templates.find(({code},index)=>index===search);
+        if(data){
+            setTemplateCode(data.code)
+            setdataValues(data.data)
+        }
+    },[])
 
     const editActionHandler = () => {
         setEditAction(!editAction)
     }
 
     const nameHandler = (e) => {
-        setName(e.target.value)
+        setdataValues({...dataValues,name:e.target.value})
     }
 
-    const characterCheck = !(name.match(/^[A-Za-z ]+$/))
-    
+    console.log(dataValues.name)
+    const characterCheck = dataValues.name ? !(dataValues.name.match(/^[A-Za-z ]+$/)) : false;
+
     const disableDownloadButton = ( characterCheck || editAction );
 
     return( 
         <div className="user-certificate">
-
-            <CertificateDisplay name={name} refValue={refValue} />
+            <CertificateDisplay templateCode={templateCode} dataValues={dataValues} refValue={refValue} /> 
 
             <div className="userProfile" >
                 <div className="download"> 
-                    <ReactToPdf targetRef={refValue} filename={name+" certificate"} options={options} x={.5} y={.4} scale={1}>   
+                    <ReactToPdf targetRef={refValue} filename={dataValues.name+" certificate"} options={options} x={.5} y={.4} scale={1}>   
                         {({toPdf}) => ( 
                             <button 
                                 className={ disableDownloadButton ? "button-disabled" : ""} 
@@ -59,11 +73,17 @@ const UserCertificate = () => {
                         onChange={(e) => nameHandler(e)}
                         disabled={!editAction}
                     /> 
-                    {characterCheck && name !== "your_name"  ? <div className="error-message">Only characters will accept</div> :""}
+                    {characterCheck && dataValues.name !== "your_name"  ? <div className="error-message">Only characters will accept</div> :""}
 
                     <div className="save">
-                        {console.log(name)}
-                        {editAction && <button className={(name === "your_name" || characterCheck ) ? "button-disabled" : ""} onClick={editActionHandler} disabled={name === "your_name" || characterCheck }><b>Save</b></button>}
+                        
+                        {editAction && <button 
+                            className={( characterCheck ) ? "button-disabled" : ""} 
+                            onClick={editActionHandler} 
+                            disabled={ characterCheck }>
+                                <b>Save</b>
+                            </button>
+                        }
                     </div>
  
                 </div>
