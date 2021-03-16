@@ -31,8 +31,8 @@ h1{
     font-weight: bold;
 }
 .register-box input{
-    width: 100%;
-    margin-bottom: 20px;
+    width: 90%;
+    margin-bottom: 10px;
 }
 .register-box input[type="text"], input[type="password"]
 {
@@ -68,6 +68,17 @@ h1{
 .register-box a:hover
 {
     color: #39dc79;
+}
+
+.error-message{
+    color: red;
+    font-size: 12px;
+    margin-left: 4%;
+}
+
+.forgot-password, .submit{
+    justify-content: center;
+    text-align: center;
 }
 
 

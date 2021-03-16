@@ -1,4 +1,4 @@
-import React,{ memo }from 'react';
+import React from 'react';
 import { Switch } from 'react-router-dom';
 
 import { PublicRoute } from './publicRoutes';
@@ -22,4 +22,4 @@ const Routes = ({setIsAuthenticated}) => {
     );
 }
 
-export default memo(Routes);
+export default Routes;

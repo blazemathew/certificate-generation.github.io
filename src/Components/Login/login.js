@@ -4,18 +4,28 @@ import { Link,useHistory } from 'react-router-dom';
 import Avatar from '../../Assets/avatar.png';
 import './login.scss';
 
+const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
 const Login = ({setIsAuthenticated}) => {
-    const [ userName,setUserName ] = useState('');
+    const [ email,setEmail ] = useState('');
     const [ password,setPassword ] = useState('');
+    const [ emailValidate,setEmailValidate ] = useState('');
 
     const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        sessionStorage.setItem('token', userName);
-        sessionStorage.setItem('refreshToken', userName);
-        setIsAuthenticated(sessionStorage.getItem('token'));
-        history.push("/user");
+        if(!(email.match(mailformat))){
+            setEmailValidate(true);
+        }
+        else{
+            setEmailValidate(false);
+        }
+        if(email.match(mailformat) && password !== ""){
+            sessionStorage.setItem('token', email);
+            setIsAuthenticated(true);
+            history.push("/user");
+        }
     }
 
     return(
@@ -27,10 +37,11 @@ const Login = ({setIsAuthenticated}) => {
                 <input 
                     type="text"
                     name="username" 
-                    placeholder="Enter Username"
-                    value={userName} 
-                    onChange={e => setUserName(e.target.value)} 
+                    placeholder="Enter Email"
+                    value={email} 
+                    onChange={e => setEmail(e.target.value)} 
                 />
+                {emailValidate && <div className="error-message">Invalid Email Id</div>}
                 <p>Password</p>
                 <input 
                     type="password"
@@ -39,8 +50,13 @@ const Login = ({setIsAuthenticated}) => {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                 />
-                <input type="submit" name="submit" value="Login" />
-                <Link to="#">Forget Password</Link> 
+                {(password === "" && emailValidate !== "") && <div className="error-message">Please Provide a Password</div>}
+                <div className="submit">
+                    <input type="submit" name="submit" value="Login" />
+                </div>
+                <div className="forgot-password">
+                    <Link to="#">Forgot Password</Link>
+                </div>
             </form>
         </div>
  

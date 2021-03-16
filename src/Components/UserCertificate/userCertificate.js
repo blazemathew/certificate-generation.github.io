@@ -15,7 +15,7 @@ const UserCertificate = () => {
     const [ name,setName ] = useState('your_name');
     const [ editAction,setEditAction ] = useState(false);
 
-    const editNameHandler = () => {
+    const editActionHandler = () => {
         setEditAction(!editAction)
     }
 
@@ -23,14 +23,25 @@ const UserCertificate = () => {
         setName(e.target.value)
     }
 
-    return(
+    const characterCheck = !(name.match(/^[A-Za-z ]+$/))
+    
+    const disableDownloadButton = ( characterCheck || editAction );
+
+    return( 
         <div className="user-certificate">
+
             <CertificateDisplay name={name} refValue={refValue} />
+
             <div className="userProfile" >
                 <div className="download"> 
-                    <ReactToPdf targetRef={refValue} filename="neo-certificate.pdf" options={options} x={.5} y={.4} scale={1}>
-                        {({toPdf}) => (
-                            !editAction && <button className="download-button" onClick={toPdf}><b>Download</b></button>
+                    <ReactToPdf targetRef={refValue} filename={name+" certificate"} options={options} x={.5} y={.4} scale={1}>   
+                        {({toPdf}) => ( 
+                            <button 
+                                className={ disableDownloadButton ? "button-disabled" : ""} 
+                                onClick={toPdf} 
+                                disabled={ disableDownloadButton }>
+                                    <b>Download</b>
+                            </button>
                         )}
                     </ReactToPdf>
                 </div>
@@ -39,18 +50,20 @@ const UserCertificate = () => {
                 <div className="user-Profile-details">
                     <div className="user-certificate space">
                         <div className="user-certificate-name"><b>Name</b></div>
-                        {!editAction && <div className="edit-details" onClick={editNameHandler}><b>Edit</b> </div>}
+                        {!editAction && <div className="edit-details" onClick={editActionHandler}><b>Edit</b> </div>}
                     </div>
                     
                     <input 
                         className={editAction ? "inputEnabled" : "inputDisabled"}
-                        value={name}
+                        placeholder="Enter your name"
                         onChange={(e) => nameHandler(e)}
                         disabled={!editAction}
                     /> 
+                    {characterCheck && name !== "your_name"  ? <div className="error-message">Only characters will accept</div> :""}
 
                     <div className="save">
-                        {editAction && <button className="save-Button" onClick={editNameHandler}><b>Save</b></button>}
+                        {console.log(name)}
+                        {editAction && <button className={(name === "your_name" || characterCheck ) ? "button-disabled" : ""} onClick={editActionHandler} disabled={name === "your_name" || characterCheck }><b>Save</b></button>}
                     </div>
  
                 </div>

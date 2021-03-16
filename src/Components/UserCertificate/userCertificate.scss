@@ -69,7 +69,18 @@ button:hover {
     border: 2px solid #008CBA;
 }
 
-.save-Button{
+.button-disabled {
+    background-color: #e7e7e7;
+    color: black;
+}
+
+.button-disabled:hover {
+    border: none;
+    background-color: #e7e7e7;
+    color: black;
+}
+
+.save{
     top: 15%;
 }
 
@@ -78,7 +89,9 @@ button:hover {
     margin-bottom: 1px solid border;
 }
 
-/* .download-Button{
-    margin-top: 10%;
-} */
-  
+.error-message{
+    color: red;
+    font-size: 12px;
+    margin: 2%;
+    margin-left: 4%;
+}
