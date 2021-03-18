@@ -6,6 +6,7 @@ import './header.scss';
 const Header = ({ isAuthenticated,setIsAuthenticated }) => {
     const logOut = () => {
         sessionStorage.clear();
+        localStorage.clear();
         setIsAuthenticated(false);
       }
     

@@ -1,27 +1,36 @@
 import React from 'react';
 import * as Handlebars from 'handlebars';
-import { useHistory } from 'react-router-dom';
+import { useHistory,useLocation } from 'react-router-dom';
 
 let arr=[]
 let dataObj = {}
 let i=0;
 
 const Preview = ({editorValue,editorData}) => {
+    const param = useLocation();
+    const search = parseInt(new URLSearchParams(param.search).get('i'));
+    
+    arr=localStorage.getItem('templates') ? JSON.parse(localStorage.getItem('templates')): [];
     const history = useHistory();
     const template = Handlebars.compile(editorValue);
     const result = template(editorData);
-    console.log(result)
 
     const saveTemplateHandler = () => {
+        if(!isNaN(search)){
+            const templateCode = JSON.parse(localStorage.getItem('templates'));
+            let arrayTemplate = (templateCode.filter((____,ind)=> ind !== search))
+            localStorage.setItem('templates',JSON.stringify(arrayTemplate))
+            arr=localStorage.getItem('templates') ? JSON.parse(localStorage.getItem('templates')): [];
+            console.log(arr)
+        }
         dataObj.names = "test-"+i
         dataObj.code = editorValue
         dataObj.data = editorData
-        arr=[...arr,dataObj]
-        console.log(JSON.stringify(arr))
-
+        arr.push(dataObj)
         localStorage.setItem('templates',JSON.stringify(arr));
-        history.push('/user/templates');
+        dataObj ={}
         i=i+1;
+        history.push('/user/templates');
     }
     return(
         <div>

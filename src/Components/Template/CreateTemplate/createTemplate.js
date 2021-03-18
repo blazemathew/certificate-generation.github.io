@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import { templates } from 'handlebars';
+import React, { useState,useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
 import Nullcast from '../../../Assets/nullcast.svg';
 
 import AceEditor from '../../TemplateGenerators/AceEditor';
@@ -20,7 +23,7 @@ const SOURCE = `<div
            border:1px solid black;
            box-sizing: border-box;
            ">
-    <center><img src={{Nullcast}} width="300" height="300"/><center>
+    <center><img src={{Nullcast}} width="300" height="300" alt="image"/><center>
     <br /><br /><br />
     <h1>Certification of Completion</h1> 
     <p>This is to certify that <b>{{name}}</b> successfully completed 
@@ -36,21 +39,22 @@ const CreateTemplate = () => {
     const [editorValue,setEditorValue] = useState(SOURCE);
     const [editorState,setEditorState] = useState('Editor');
 
-    // //Convert Object keys to array
-    // const arrayData = Object.keys(data); 
 
-    // //Regular Expression for seprating data values into array
-    // const value = [...editorValue.matchAll(/{{([a-zA-Z}]+)}}/gm)]
-    // console.log(value)
-    // // value.forEach(val => (arrayData.includes(val[1]))? 
-    // //     null : 
-    // //     data[val[1]] = " test_"+val[1], arrayData = Object.keys(data))
+    const param = useLocation();
+    const search = parseInt(new URLSearchParams(param.search).get('i'));
+    const templateCode = JSON.parse(localStorage.getItem('templates'));
+    console.log(search)
 
-    // value.forEach(([, name]) => {
-    //     if(!(arrayData.includes(name))) {
-    //         data[name] = " test_"+name;
-    //     }
-    // })
+    useEffect(()=>{
+        if(!isNaN(search)){
+            console.log("templateCode",templateCode)
+            const data = templateCode.find(({code},index)=>index===search);
+            if(data){
+                console.log(data.code)
+                setEditorValue(data.code)
+            }
+        }
+    },[])
 
     const buttonEditor = () => {
         switch(editorState){

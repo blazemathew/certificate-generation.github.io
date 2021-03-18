@@ -15,17 +15,21 @@ const options = {
 const UserCertificate = () => {
     const [ dataValues,setdataValues ] = useState('');
     const [ templateCode,setTemplateCode ] = useState('');
+    // const [ image,setImage ] = useState('');
     const [ editAction,setEditAction ] = useState(false);
 
     const param = useLocation();
     const search = parseInt(new URLSearchParams(param.search).get('k'));
     const templates = JSON.parse(localStorage.getItem('templates'));
+    console.log(search)
 
     useEffect(()=>{
         const data = templates.find(({code},index)=>index===search);
         if(data){
+            console.log(data.code)
             setTemplateCode(data.code)
             setdataValues(data.data)
+            // setImage(data.image)
         }
     },[])
 
@@ -44,7 +48,7 @@ const UserCertificate = () => {
 
     return( 
         <div className="user-certificate">
-            <CertificateDisplay templateCode={templateCode} dataValues={dataValues} refValue={refValue} /> 
+            <CertificateDisplay templateCode={templateCode}  dataValues={dataValues} refValue={refValue} /> 
 
             <div className="userProfile" >
                 <div className="download"> 
@@ -70,6 +74,7 @@ const UserCertificate = () => {
                     <input 
                         className={editAction ? "inputEnabled" : "inputDisabled"}
                         placeholder="Enter your name"
+                        value={dataValues.name}
                         onChange={(e) => nameHandler(e)}
                         disabled={!editAction}
                     /> 
