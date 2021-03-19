@@ -9,17 +9,17 @@ const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0
 const Login = ({setIsAuthenticated}) => {
     const [ email,setEmail ] = useState('');
     const [ password,setPassword ] = useState('');
-    const [ emailValidate,setEmailValidate ] = useState('');
+    const [ isEmailValidate,setIsEmailValidate ] = useState('');
 
     const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if(!(email.match(mailformat))){
-            setEmailValidate(true);
+            setIsEmailValidate(true);
         }
         else{
-            setEmailValidate(false);
+            setIsEmailValidate(false);
         }
         if(email.match(mailformat) && password !== ""){
             sessionStorage.setItem('token', email);
@@ -41,7 +41,7 @@ const Login = ({setIsAuthenticated}) => {
                     value={email} 
                     onChange={e => setEmail(e.target.value)} 
                 />
-                {emailValidate && <div className="error-message">Invalid Email Id</div>}
+                {isEmailValidate && <div className="error-message">Invalid Email Id</div>}
                 <p>Password</p>
                 <input 
                     type="password"
@@ -50,7 +50,7 @@ const Login = ({setIsAuthenticated}) => {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                 />
-                {(password === "" && emailValidate !== "") && <div className="error-message">Please Provide a Password</div>}
+                {(password === "" && isEmailValidate !== "") && <div className="error-message">Please Provide a Password</div>}
                 <div className="submit">
                     <input type="submit" name="submit" value="Login" />
                 </div>

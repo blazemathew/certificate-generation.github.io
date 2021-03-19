@@ -10,12 +10,10 @@ const  months = ["January", "February", "March", "April", "May", "June", "July",
 
 const today = new Date();
     const monthName=months[today.getMonth()];
-    const date=today.getDate() + "/"+ parseInt(today.getMonth()+1) +"/"+ today.getFullYear();
-    console.log(date);
-    
+    const date=today.getDate() + "/"+ parseInt(today.getMonth()+1) +"/"+ today.getFullYear();    
 
 const SOURCE = `<div 
-    style="width: 1020px;
+           style="width: 1020px;
            height: 620px;
            border:1px solid black;
            box-sizing: border-box;
@@ -35,9 +33,9 @@ const data = { "name": "Alan", Nullcast };
 const CreateTemplate = ({match}) => {
     const [editorValue,setEditorValue] = useState(SOURCE);
     const [editorState,setEditorState] = useState('Editor');
-    const [id,setId] = useState()
+    const [id,setId] = useState();
 
-    console.log(typeof(match.params.id))
+    // console.log(typeof(match.params.id))
     const templateCode = JSON.parse(localStorage.getItem('templates'));
 
     useEffect(()=>{

@@ -12,20 +12,15 @@ const options = {
 };
 
 const UserCertificate = ({match}) => {
-    const [ dataValues,setdataValues ] = useState('');
+    const [ dataValues,setdataValues ] = useState({});
     const [ templateCode,setTemplateCode ] = useState('');
     const [ editAction,setEditAction ] = useState(false);
 
-    // console.log(match.params.id);
     const templates = JSON.parse(localStorage.getItem('templates'));
 
     useEffect(()=>{
-        const data = templates.find(({code},index)=>index === +match.params.id);
-        if(data){
-            console.log(data.code)
-            setTemplateCode(data.code)
-            setdataValues(data.data)
-        }
+        setTemplateCode(templates[+match.params.id].code);
+        setdataValues(templates[+match.params.id].data);
     },[])
 
     const editActionHandler = () => {
@@ -36,8 +31,7 @@ const UserCertificate = ({match}) => {
         setdataValues({...dataValues,name:e.target.value})
     }
 
-    console.log(dataValues.name)
-    const characterCheck = dataValues.name ? !(dataValues.name.match(/^[A-Za-z ]+$/)) : false;
+    const characterCheck =dataValues.name ? (dataValues.name.match(/^[A-Za-z ]+$/)) : false;
 
     const disableDownloadButton = ( characterCheck || editAction );
 
@@ -73,7 +67,7 @@ const UserCertificate = ({match}) => {
                         onChange={(e) => nameHandler(e)}
                         disabled={!editAction}
                     /> 
-                    {characterCheck && dataValues.name !== "your_name"  ? <div className="error-message">Only characters will accept</div> :""}
+                    {characterCheck ? <div className="error-message">Only characters will accept</div> :""}
 
                     <div className="save">
                         
@@ -85,7 +79,6 @@ const UserCertificate = ({match}) => {
                             </button>
                         }
                     </div>
- 
                 </div>
             </div>
         </div>  

@@ -11,17 +11,17 @@ const Register = () => {
     const [ email,setEmail ] = useState('');
     const [ password,setPassword ] = useState('');
     const [ confirmPassword,setConfirmPassword ] = useState('');
-    const [ emailValidate,setEmailValidate ] = useState('');
+    const [ isEmailValidate,setIsEmailValidate ] = useState('');
 
     const history = useHistory();
     
     const handleSubmit = (e) => {
         e.preventDefault();
         if(!(email.match(mailformat))){
-            setEmailValidate(true);
+            setIsEmailValidate(true);
         }
         else{
-            setEmailValidate(false);
+            setIsEmailValidate(false);
         }
         if(email.match(mailformat) && password !== ""){
             history.push("/login");
@@ -41,7 +41,7 @@ const Register = () => {
                     value={email} 
                     onChange={e => setEmail(e.target.value)} 
                 />
-                {emailValidate && <div className="error-message">Invalid Email Id</div>}
+                {isEmailValidate && <div className="error-message">Invalid Email Id</div>}
 
                 <p>Password</p>
                 <input 
@@ -51,7 +51,7 @@ const Register = () => {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                 />
-                {(password === "" && emailValidate !== "") && <div className="error-message">Please Provide a Password</div>}
+                {(password === "" && isEmailValidate !== "") && <div className="error-message">Please Provide a Password</div>}
 
                 <p>Confirm Password</p>
                 <input 
@@ -61,7 +61,7 @@ const Register = () => {
                     value={confirmPassword}
                     onChange={e => setConfirmPassword(e.target.value)}
                 />
-                {(confirmPassword === "" && emailValidate !== "") && <div className="error-message">Please Confirm New Password</div>}
+                {(confirmPassword === "" && isEmailValidate !== "") && <div className="error-message">Please Confirm New Password</div>}
 
                 <div className="submit">
                     <input type="submit" name="submit" value="Register" />

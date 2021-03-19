@@ -2,12 +2,11 @@ import React from 'react';
 import * as Handlebars from 'handlebars';
 import { useHistory } from 'react-router-dom';
 
-let arr=[]
-let dataObj = {}
+const dataObj = {}
 let i=0;
 
 const Preview = ({editorValue,editorData,id}) => {    
-    arr=localStorage.getItem('templates') ? JSON.parse(localStorage.getItem('templates')): [];
+    let arr = JSON.parse(localStorage.getItem('templates')) || [];
     
     const history = useHistory();
     const template = Handlebars.compile(editorValue);
@@ -15,19 +14,17 @@ const Preview = ({editorValue,editorData,id}) => {
 
     const saveTemplateHandler = () => {
         if(id){
-            const templateCode = JSON.parse(localStorage.getItem('templates'));
-            templateCode[+id].code = editorValue;
-            localStorage.setItem('templates',JSON.stringify(templateCode));
-            
+            arr = JSON.parse(localStorage.getItem('templates'));
+            arr[+id].code = editorValue; 
         }
         else{
-        dataObj.names = "test-"+i
-        dataObj.code = editorValue
-        dataObj.data = editorData
-        arr.push(dataObj)
-        localStorage.setItem('templates',JSON.stringify(arr));
-        i=i+1;
+            dataObj.names = "test-"+i;
+            dataObj.code = editorValue;
+            dataObj.data = editorData;
+            arr.push(dataObj);
+            i=i+1;
         }
+        localStorage.setItem('templates',JSON.stringify(arr));
         history.push('/user/templates');
     }
     return(
