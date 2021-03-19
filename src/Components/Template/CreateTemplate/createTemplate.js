@@ -1,7 +1,4 @@
-import { templates } from 'handlebars';
 import React, { useState,useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-
 import Nullcast from '../../../Assets/nullcast.svg';
 
 import AceEditor from '../../TemplateGenerators/AceEditor';
@@ -35,20 +32,19 @@ const SOURCE = `<div
 //dummy content for Ace Editor
 const data = { "name": "Alan", Nullcast };
 
-const CreateTemplate = () => {
+const CreateTemplate = ({match}) => {
     const [editorValue,setEditorValue] = useState(SOURCE);
     const [editorState,setEditorState] = useState('Editor');
+    const [id,setId] = useState()
 
-
-    const param = useLocation();
-    const search = parseInt(new URLSearchParams(param.search).get('i'));
+    console.log(typeof(match.params.id))
     const templateCode = JSON.parse(localStorage.getItem('templates'));
-    console.log(search)
 
     useEffect(()=>{
-        if(!isNaN(search)){
+        setId(match.params.id)
+        if(!isNaN(match.params.id)){
             console.log("templateCode",templateCode)
-            const data = templateCode.find(({code},index)=>index===search);
+            const data = templateCode.find(({code},index)=>+index===+match.params.id);
             if(data){
                 console.log(data.code)
                 setEditorValue(data.code)
@@ -61,7 +57,7 @@ const CreateTemplate = () => {
             case 'Editor':
                 return <AceEditor editorValue={editorValue} setEditorValue={setEditorValue}/>
             case 'Preview':
-                return <Preview editorValue={editorValue} editorData={data}/>
+                return <Preview editorValue={editorValue} editorData={data} id={id} />
             case 'Test_data':
                 return <TestData editorData={data} />
             default:

@@ -1,6 +1,5 @@
 import React,{ useState,useEffect } from 'react';
 import CertificateDisplay from './CertificateDisplay';
-import { useLocation } from 'react-router-dom';
 import ReactToPdf from "react-to-pdf";
 import './userCertificate.scss';
 
@@ -12,24 +11,20 @@ const options = {
     format: [835,525]
 };
 
-const UserCertificate = () => {
+const UserCertificate = ({match}) => {
     const [ dataValues,setdataValues ] = useState('');
     const [ templateCode,setTemplateCode ] = useState('');
-    // const [ image,setImage ] = useState('');
     const [ editAction,setEditAction ] = useState(false);
 
-    const param = useLocation();
-    const search = parseInt(new URLSearchParams(param.search).get('k'));
+    // console.log(match.params.id);
     const templates = JSON.parse(localStorage.getItem('templates'));
-    console.log(search)
 
     useEffect(()=>{
-        const data = templates.find(({code},index)=>index===search);
+        const data = templates.find(({code},index)=>index === +match.params.id);
         if(data){
             console.log(data.code)
             setTemplateCode(data.code)
             setdataValues(data.data)
-            // setImage(data.image)
         }
     },[])
 

@@ -22,8 +22,9 @@ const Routes = ({setIsAuthenticated}) => {
 
                 <PrivateRoute exact path="/user" component={User} />
                 <PrivateRoute exact path="/user/templates" component={Template} />
+                <PrivateRoute exact path="/user/templates/create/:id" component={CreateTemplate} />
                 <PrivateRoute exact path="/user/templates/create" component={CreateTemplate} />
-                <PrivateRoute exact path="/user/templates/display" component={UserCertificate} />
+                <PrivateRoute exact path="/user/templates/display/:id" component={UserCertificate} />
             </Switch>
         </div>
     );
