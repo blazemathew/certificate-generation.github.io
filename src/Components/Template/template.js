@@ -3,28 +3,27 @@ import { useHistory } from 'react-router-dom';
 
 import './template.scss';
 
-const Template = () => {
-    const [ arrayTemplate,setArrayTemplate ] = useState('');
 
-    let templateCode = JSON.parse(localStorage.getItem('templates'));
-    console.log(templateCode)
+const Template = () => {
+    const [ templateCode,setTemplateCode ] = useState(JSON.parse(localStorage.getItem('templates')));
    
     const history = useHistory();
 
     const selectHandler = (e,index) => {
+        let actionConfirm;
         switch(e.target.value){
             case 'edit':
-                let editConfirm = window.confirm("Do you want to edit this template")
-                if(editConfirm){
+                actionConfirm = window.confirm("Do you want to edit this template")
+                if(actionConfirm){
                     history.push(`/user/templates/create/${index}`)
                 }
                 break
             case 'delete':
-                let deleteConfirm = window.confirm("Do you want to delete this template")
-                if(deleteConfirm){
-                    const arrayTemplate = (templateCode.filter((____,ind)=> ind !== index))
-                    localStorage.setItem('templates',JSON.stringify(arrayTemplate))
-                    setArrayTemplate(arrayTemplate)
+                actionConfirm = window.confirm("Do you want to delete this template")
+                if(actionConfirm){
+                    const temp = templateCode.filter((____,ind)=> ind !== index)
+                    localStorage.setItem('templates',JSON.stringify(temp))
+                    setTemplateCode(temp)
                 }
                 break
             default:
@@ -36,7 +35,7 @@ const Template = () => {
         <div>
             
             <button onClick={() => (history.push('/user/templates/create'))}>Create Template</button>
-            { templateCode.length !== 0 ? templateCode.map((___,index) => 
+            { templateCode.length ? templateCode.map((___,index) => 
                 
                 <div className="template-lists box-display">
                     <div className="selectOption">

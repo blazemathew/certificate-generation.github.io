@@ -42,13 +42,9 @@ const CreateTemplate = ({match}) => {
 
     useEffect(()=>{
         setId(match.params.id)
-        if(!isNaN(match.params.id)){
+        if(match.params.id){
             console.log("templateCode",templateCode)
-            const data = templateCode.find(({code},index)=>+index===+match.params.id);
-            if(data){
-                console.log(data.code)
-                setEditorValue(data.code)
-            }
+            setEditorValue(templateCode[+match.params.id].code);
         }
     },[])
 

@@ -4,13 +4,13 @@ import { Switch } from 'react-router-dom';
 import { PublicRoute } from './publicRoutes';
 import { PrivateRoute } from './privateRoutes';
 
-import Home from '../Home';
-import Login from '../Login';
-import Register from '../Register';
-import User from '../User';
-import Template from '../Template';
-import CreateTemplate from '../Template/CreateTemplate';
-import UserCertificate from '../UserCertificate';
+import Home from '../Components/Home';
+import Login from '../Components/Login';
+import Register from '../Components/Register';
+import User from '../Components/User';
+import Template from '../Components/Template';
+import CreateTemplate from '../Components/Template/CreateTemplate';
+import UserCertificate from '../Components/UserCertificate';
 
 const Routes = ({setIsAuthenticated}) => {
     return(

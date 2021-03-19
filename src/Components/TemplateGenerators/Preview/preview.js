@@ -18,7 +18,7 @@ const Preview = ({editorValue,editorData,id}) => {
             const templateCode = JSON.parse(localStorage.getItem('templates'));
             templateCode[+id].code = editorValue;
             localStorage.setItem('templates',JSON.stringify(templateCode));
-            history.push('/user/templates');
+            
         }
         else{
         dataObj.names = "test-"+i
@@ -27,8 +27,8 @@ const Preview = ({editorValue,editorData,id}) => {
         arr.push(dataObj)
         localStorage.setItem('templates',JSON.stringify(arr));
         i=i+1;
+        }
         history.push('/user/templates');
-    }
     }
     return(
         <div>

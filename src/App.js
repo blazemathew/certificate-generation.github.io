@@ -1,7 +1,7 @@
 import React,{ useState } from 'react';
 
 import Header from './Components/Header';
-import Routes from './Components/Router';
+import Routes from './Router';
 
 import './App.scss';
 
