@@ -12,6 +12,7 @@
     "node-sass": "^5.0.0",
     "react": "^16.5.2",
     "react-ace": "^9.3.0",
+    "react-confirm-alert": "^2.7.0",
     "react-dom": "^16.5.2",
     "react-dropdown-button": "^1.0.11",
     "react-hook-form": "^6.15.4",

@@ -12,7 +12,7 @@ const options = {
 };
 
 const UserCertificate = ({match}) => {
-    const [ dataValues,setdataValues ] = useState({});
+    const [ dataValues,setdataValues ] = useState('');
     const [ templateCode,setTemplateCode ] = useState('');
     const [ editAction,setEditAction ] = useState(false);
 

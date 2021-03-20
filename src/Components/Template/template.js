@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 import './template.scss';
 
 const Template = () => {
@@ -17,13 +20,25 @@ const Template = () => {
                 history.push(`/user/templates/create/${index}`)
                 break
             case 'delete':
-                const actionConfirm = window.confirm("Do you want to delete this template")
-                if(actionConfirm){
-                    templateCode.splice(index,1)
-                    localStorage.setItem('templates',JSON.stringify(templateCode))
-                    const temp=JSON.parse(localStorage.getItem('templates'));
-                    setTemplateCode(temp)
-                }
+                confirmAlert({
+                    title: 'Confirm to submit',
+                    message: 'Are you sure you want to delete this template',
+                    buttons: [
+                      {
+                        label: 'Yes',
+                        onClick: () => {
+                            templateCode.splice(index,1)
+                            localStorage.setItem('templates',JSON.stringify(templateCode))
+                            const temp=JSON.parse(localStorage.getItem('templates'));
+                            setTemplateCode(temp)
+                        }
+                      },
+                      {
+                        label: 'No',
+                        onClick: () => false
+                      }
+                    ]
+                  });
                 break
             default:
                 return

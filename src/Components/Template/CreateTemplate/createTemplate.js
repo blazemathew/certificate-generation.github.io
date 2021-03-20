@@ -10,7 +10,7 @@ const  months = ["January", "February", "March", "April", "May", "June", "July",
 
 const today = new Date();
     const monthName=months[today.getMonth()];
-    const date=today.getDate() + "/"+ parseInt(today.getMonth()+1) +"/"+ today.getFullYear();    
+    // const date=today.getDate() + "/"+ parseInt(today.getMonth()+1) +"/"+ today.getFullYear();    
 
 const SOURCE = `<div 
            style="width: 1020px;
